@@ -11,6 +11,6 @@ namespace Symbiose.Services.Interfaces
     {
         IQueryable<Topic> GetTopicsOfProject(int projectId);
 
-        IQueryable<TopicMessage> GetMessagesOfTopic(int topicId);
+        Task<IEnumerable<TopicMessage>> GetMessagesOfTopicAsync(int topicId);
     }
 }

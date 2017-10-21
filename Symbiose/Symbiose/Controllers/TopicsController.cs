@@ -7,6 +7,7 @@ using Symbiose.Services;
 using Symbiose.Data.Models.Application;
 using Symbiose.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,7 +18,7 @@ namespace Symbiose.Controllers
     {
         protected ITopicService TopicService { get; set; }
 
-        public TopicsController(TopicService topicService)
+        public TopicsController(ITopicService topicService)
         {
             TopicService = topicService;
         }
@@ -56,13 +57,13 @@ namespace Symbiose.Controllers
             }
         }
 
-        //POST: /api/topics
+        //POST: /api/topics/AddNewTopic
         [HttpPost("AddNewTopic")]
         public async Task<IActionResult> AddNewTopic([FromBody] Topic topic)
         {
             try
             {
-                await TopicService.AddAsync<Topic>(topic);
+                await TopicService.AddAsync(topic);
                 return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Topic Added!" });
             }
             catch
@@ -70,5 +71,20 @@ namespace Symbiose.Controllers
                 return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
             }
         }
+
+        // GET: /api/topics/pagination?take&skip
+        [HttpGet("pagination")]
+        public async Task<IActionResult> GetTopicsAsync(int take, int skip = 0)
+        {
+            try
+            {
+                return Ok(await TopicService.Set<Topic>().Skip(skip).Take(take).ToListAsync());
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
     }
 }
