@@ -16,9 +16,26 @@ export default new Router({
       component: () => import('@/components/Register')
     },
     {
+      path: '/project',
+      name: 'Project',
+      component: () => import('@/components/Project'),
+      children: [
+        {
+          path: '/tasks',
+          name: 'Tasks',
+          component: () => import('@/components/Tasks')
+        },
+        {
+          path: '/topics',
+          name: 'Topics',
+          component: () => import('@/components/Topics')
+        }
+      ]
+    },
+    {
       path: '/',
-      name: 'ProjectsDashboard',
-      component: () => import('@/components/ProjectsDashboard')
+      name: 'ProjectsList',
+      component: () => import('@/components/ProjectsList')
     }
   ]
 })
