@@ -12,7 +12,7 @@ namespace Symbiose.Data.Models.Application
         Delayed = 3
     }
 
-    class Task : Entity
+    public class Task : Entity
     {
         public int ProjectId { get; set; }
 
@@ -28,7 +28,7 @@ namespace Symbiose.Data.Models.Application
 
         public int CreatedById { get; set; }
 
-        public int AssignedToId { get; set; }
+        public int AssigneeId { get; set; }
 
         public TaskStatus TaskStatus { get; set; }
     }

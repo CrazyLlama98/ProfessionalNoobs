@@ -6,17 +6,17 @@ using System.Text;
 
 namespace Symbiose.Data
 {
-    class SymbioseContext : DbContext
+    public class SymbioseContext : DbContext
     {
-       public SymbioseContext(DbContextOptions<SymbioseContext> dbOptions)
-            : base(dbOptions)
-        {
-            
-        }
+        public SymbioseContext(DbContextOptions<SymbioseContext> dbOptions)
+             : base(dbOptions)
+        { }
 
         #region Project 
 
         public DbSet<Project> Projects { get; set; }
+
+        public DbSet<UserProject> UserProjects { get; set; }
 
         #endregion
 

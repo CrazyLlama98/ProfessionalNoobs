@@ -18,7 +18,7 @@ namespace Symbiose.Data.Models.Application
         public string Description { get; set; }
 
         public int  CreatorId { get; set; }
-        
+
         public DateTime DateCreated { get; set; }
 
         public ProjectStatus ProjectStatus { get; set; }

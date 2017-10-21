@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Symbiose.Data.Models.Application
 {
-    class TopicMessage : Entity
+    public class TopicMessage : Entity
     {
         public int TopicId { get; set; }
 
