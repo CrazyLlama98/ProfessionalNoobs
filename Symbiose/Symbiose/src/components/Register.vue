@@ -11,19 +11,19 @@
             </v-card-title>
             <v-card-text row @keyup.enter="register">
               <v-flex xs10 offset-xs1>
-                <v-text-field name="username" label="Username" id="username" :error-messages="errors" v-model.trim="username" @keyup="removeErrors" required>
+                <v-text-field name="username" label="Username" id="username" :error-messages="errors" :rules="rules.username" v-model.trim="username" @keyup="removeErrors" required>
                 </v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field name="email" label="Email" id="email" :error-messages="errors" v-model.trim="email" @keyup="removeErrors" required>
+                <v-text-field name="email" label="Email" id="email" :error-messages="errors" :rules="rules.email" v-model.trim="email" @keyup="removeErrors" required>
                 </v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field name="password" label="Password" id="password" type="password" :error-messages="errors" @keyup="removeErrors" required v-model.trim="password" :append-icon="!visible ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (visible = !visible)" :type="!visible ? 'password' : 'text'">
+                <v-text-field name="password" label="Password" id="password" type="password" :rules="rules.password" :error-messages="errors" @keyup="removeErrors" required v-model.trim="password" :append-icon="!visible ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (visible = !visible)" :type="!visible ? 'password' : 'text'">
                 </v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field name="retypedPassword" label="Retype Password" id="retypedPassword" type="password" :error-messages="errors" @keyup="removeErrors" required v-model.trim="retypedPassword">
+                <v-text-field name="retypedPassword" label="Retype Password" id="retypedPassword" :rules="rules.retypedPassword" type="password" :error-messages="errors" @keyup="removeErrors" required v-model.trim="retypedPassword">
                 </v-text-field>
               </v-flex>
             </v-card-text>
@@ -46,6 +46,26 @@ let loginService = new LoginService()
 export default {
   data () {
     return {
+      rules: {
+        username: [
+          (u) => !!u || 'Username is required!',
+          (u) => u.length >= 6 || 'Username must be at least 6 characters!'
+        ],
+        email: [
+          (e) => !!e || 'E-mail is required!',
+          (e) => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(e) || 'Invalid e-mail.'
+          }
+        ],
+        password: [
+          (p) => !!p || 'Password is required!',
+          (p) => p.length >= 8 || 'Password must have at least 8 characters!'
+        ],
+        retypedPassword: [
+          (r) => r === this.password || 'Password is not the same!'
+        ]
+      },
       username: '',
       password: '',
       retypedPassword: '',
@@ -57,7 +77,7 @@ export default {
   methods: {
     register () {
       this.errors = []
-      if (this.isValid()) {
+      if (this.formCheck()) {
         loginService.registerUser(this.username, this.email, this.password).then((response) => {
           if (response.status === 200) {
             this.$router.push('/login')
@@ -72,6 +92,9 @@ export default {
     },
     removeErrors () {
       this.errors = []
+    },
+    formCheck () {
+      return this.username !== '' && this.email !== '' && this.password !== '' && this.retypedPassword !== '' && this.password === this.retypedPassword
     }
   },
   computed: {

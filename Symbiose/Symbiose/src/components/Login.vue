@@ -12,11 +12,11 @@
             </v-card-title>
             <v-card-text row @keyup.enter="login">
               <v-flex xs10 offset-xs1>
-                <v-text-field name="email" label="Email" id="email" :error-messages="errors" @keyup="removeErrors" v-model.trim="email" required>
+                <v-text-field name="email" label="Email" id="email" :error-messages="errors" @keyup="removeErrors" :rules="rules.email" v-model.trim="email" required>
                 </v-text-field>
               </v-flex>
               <v-flex xs10 offset-xs1>
-                <v-text-field name="password" label="Password" id="password" type="password" :error-messages="errors" @keyup="removeErrors" required v-model.trim="password" :append-icon="!visible ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (visible = !visible)" :type="!visible ? 'password' : 'text'">
+                <v-text-field name="password" label="Password" id="password" type="password" :error-messages="errors" :rules="rules.password" @keyup="removeErrors" required v-model.trim="password" :append-icon="!visible ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (visible = !visible)" :type="!visible ? 'password' : 'text'">
                 </v-text-field>
               </v-flex>
             </v-card-text>
@@ -42,6 +42,19 @@ let loginService = new LoginService()
 export default {
   data () {
     return {
+      rules: {
+        email: [
+          (e) => !!e || 'E-mail is required!',
+          (e) => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(e) || 'Invalid e-mail.'
+          }
+        ],
+        password: [
+          (p) => !!p || 'Password is required!',
+          (p) => p.length >= 8 || 'Password must have at least 8 characters!'
+        ]
+      },
       password: '',
       email: '',
       visible: false,
