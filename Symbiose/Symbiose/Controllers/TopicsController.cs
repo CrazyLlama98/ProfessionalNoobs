@@ -86,5 +86,20 @@ namespace Symbiose.Controllers
             }
         }
 
+        // POST: /api/Topics/edit/{topicId}
+        [HttpPost("edit/{messageId}")]
+        public async Task<IActionResult> EditTopic(int topicId, [FromBody] Topic topic)
+        {
+            try
+            {
+                await TopicService.UpdateAsync(topicId, topic);
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Topic Edited!" });
+            }
+            catch
+            {
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
+            }
+        }
+
     }
 }

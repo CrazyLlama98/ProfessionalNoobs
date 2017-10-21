@@ -50,5 +50,20 @@ namespace Symbiose.Controllers
                 return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
             }
         }
+
+        // POST: /api/Projects/edit/{projectId}
+        [HttpPost("edit/{projectId}")]
+        public async Task<IActionResult> EditProject(int projectId, [FromBody] Project project)
+        {
+            try
+            {
+                await ProjectService.UpdateAsync(projectId, project);
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Project Edited!" });
+            }
+            catch
+            {
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
+            }
+        }
     }
 }

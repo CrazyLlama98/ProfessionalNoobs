@@ -18,5 +18,7 @@ namespace Symbiose.Services.Interfaces
         Task AddAsync<T>(T entry) where T : Entity;
 
         Task AddRangeAsync<T>(IEnumerable<T> entries) where T : Entity;
+
+        Task UpdateAsync<T>(int id, T entry) where T : Entity;
     }
 }
