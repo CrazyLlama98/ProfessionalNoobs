@@ -21,14 +21,16 @@ namespace Symbiose
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthServices()
-                .AddCookieOptions();
+                .AddCookieOptions()
+                .AddDbServices();
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserContext userContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserContext userContext, SymbioseContext symbioseContext)
         {
             userContext.Database.EnsureCreated();
+            symbioseContext.Database.EnsureCreated();
             if (env.IsDevelopment())
             {
                 var options = new WebpackDevMiddlewareOptions() { HotModuleReplacement = true };
