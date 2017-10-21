@@ -57,7 +57,7 @@ namespace Symbiose.Extensions
 
         public static IServiceCollection AddDbServices(this IServiceCollection services)
         {
-            services.AddDbContext<SymbioseContext>(options => options.UseSqlServer("Server=(local);Initial Catalog=SymbioseUsers;Trusted_Connection=Yes;"));
+            services.AddDbContext<SymbioseContext>(options => options.UseSqlServer("Server=(local);Initial Catalog=Symbiose;Trusted_Connection=Yes;"));
             services.AddTransient<IProjectService, ProjectService>()
                 .AddTransient<ITaskService, TaskService>()
                 .AddTransient<ITopicService, TopicService>();
