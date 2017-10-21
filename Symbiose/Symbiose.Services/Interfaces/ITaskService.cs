@@ -11,6 +11,8 @@ namespace Symbiose.Services.Interfaces
     {
         IQueryable<Data.Models.Application.Task> GetTasksByProject(int projectId);
 
+        IQueryable<Data.Models.Application.Task> GetTasksByUser(int userId);
+
         IQueryable<Subtask> GetSubtasksOfTask(int taskId);
 
         IQueryable<Data.Models.Application.Task> GetTaskOfUser(int userId);

@@ -29,6 +29,11 @@ namespace Symbiose.Services
             return Context.Set<Task>().Where(t => t.ProjectId == projectId);
         }
 
+        public IQueryable<Task> GetTasksByUser(int userId)
+        {
+            return Context.Set<Task>().Where(t => t.AssigneeId == userId);
+        }
+
         public IQueryable<Task> GetTaskByStatus(TaskStatus status)
         {
             return Context.Set<Task>().Where(t => t.TaskStatus == status);
