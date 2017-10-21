@@ -14,10 +14,21 @@ namespace Symbiose.Data
             
         }
 
+        #region Project 
+
         public DbSet<Project> Projects { get; set; }
+
+        #endregion
+
+        #region Tasks
 
         public DbSet<Task> Tasks { get; set; }
 
         public DbSet<Subtask> Subtasks { get; set; }
+
+        public DbSet<TaskComment> TaskComments { get; set; }
+
+        #endregion
+
     }
 }
