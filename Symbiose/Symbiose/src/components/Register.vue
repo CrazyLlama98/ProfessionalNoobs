@@ -82,7 +82,7 @@ export default {
           if (response.status === 200) {
             this.$router.push('/login')
           } else {
-            this.errors.push('Server error')
+            this.errors.push(response.data.text)
           }
         }).catch(error => {
           console.log(error)

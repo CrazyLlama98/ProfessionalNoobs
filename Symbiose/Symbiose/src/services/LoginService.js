@@ -42,7 +42,7 @@ export default class LoginService {
 
   isLoggedIn () {
     return new Promise((resolve, reject) => {
-      axios.post('/api/account/isLoggedIn')
+      axios.post('/api/account/identity')
       .then(response => {
         resolve(response)
       })

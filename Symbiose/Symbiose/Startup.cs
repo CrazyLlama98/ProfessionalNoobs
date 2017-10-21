@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.AspNetCore.Identity;
 using Symbiose.Data.Models.Account;
 using Symbiose.Data;
-using Symbiose.ServiceExtensions;
+using Symbiose.Extensions;
 
 namespace Symbiose
 {
