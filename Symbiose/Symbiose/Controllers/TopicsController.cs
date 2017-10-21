@@ -57,10 +57,18 @@ namespace Symbiose.Controllers
         }
 
         //POST: /api/topics
-        /*[HttpPost]
-        public async Task<IActionResult> AddNewTopics([FromBody] Topic topic)
+        [HttpPost("AddNewTopic")]
+        public async Task<IActionResult> AddNewTopic([FromBody] Topic topic)
         {
-
-        }*/
+            try
+            {
+                await TopicService.AddAsync<Topic>(topic);
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Topic Added!" });
+            }
+            catch
+            {
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
+            }
+        }
     }
 }

@@ -41,7 +41,8 @@ namespace Symbiose.Services
 
         public async Task AddRangeAsync<T>(IEnumerable<T> entries) where T : Entity
         {
-            await Context.Set<T>().AddRangeAsync();
+            await Context.Set<T>().AddRangeAsync(entries);
+            await Context.SaveChangesAsync();
         }
     }
 }
