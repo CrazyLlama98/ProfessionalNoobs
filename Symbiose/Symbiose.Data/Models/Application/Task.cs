@@ -14,6 +14,8 @@ namespace Symbiose.Data.Models.Application
 
     class Task : Entity
     {
+        public int ProjectId { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
