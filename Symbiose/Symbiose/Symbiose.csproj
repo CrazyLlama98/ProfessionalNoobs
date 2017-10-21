@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Symbiose.Data\Symbiose.Data.csproj" />
+    <ProjectReference Include="..\Symbiose.Services\Symbiose.Services.csproj" />
   </ItemGroup>
 
 </Project>

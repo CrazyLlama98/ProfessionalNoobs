@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Symbiose.Services.Interfaces
 {
-    interface ITaskService : IGenericDbService
+    public interface ITaskService : IGenericDbService
     {
         IQueryable<Data.Models.Application.Task> GetTasksByProject(int projectId);
 

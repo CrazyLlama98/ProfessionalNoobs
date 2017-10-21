@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Symbiose.Services.Interfaces
 {
-    interface IGenericDbService
+    public interface IGenericDbService
     {
         Task<IEnumerable<T>> GetAllAsync<T>() where T : Entity;
         IQueryable<T> Set<T>() where T : Entity;

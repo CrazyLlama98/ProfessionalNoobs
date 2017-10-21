@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Symbiose.Services
 {
-    class TopicService : GenericDbService, ITopicService
+    public class TopicService : GenericDbService, ITopicService
     {
         public TopicService(SymbioseContext context)
             : base(context)

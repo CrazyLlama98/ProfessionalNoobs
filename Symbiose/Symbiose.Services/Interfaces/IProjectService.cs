@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Symbiose.Services.Interfaces
 {
-    interface IProjectService : IGenericDbService
+    public interface IProjectService : IGenericDbService
     {
         IQueryable<Project> GetProjectsCreatedByUser(int userId);
 
