@@ -34,7 +34,7 @@
             <v-list-tile-title>Topics</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile to="projectslist">
+        <v-list-tile to="/projectslist">
           <v-list-tile-action>
             <v-icon>mdi-folder-open</v-icon>
           </v-list-tile-action>
@@ -48,11 +48,9 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Symbiose</v-toolbar-title>
     </v-toolbar>
-    <main>
       <v-container fluid>
         <router-view></router-view>
       </v-container>
-    </main>
   </v-app>
 </template>
 
