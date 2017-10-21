@@ -30,5 +30,13 @@ namespace Symbiose.Data
 
         #endregion
 
+        #region Topics
+
+        public DbSet<Topic> Topics { get; set; }
+
+        public DbSet<TopicMessage> TopicMessages { get; set; }
+
+        #endregion
+
     }
 }
