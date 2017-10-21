@@ -35,7 +35,7 @@ namespace Symbiose
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, UserContext userContext)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, UserContext userContext, SymbioseContext symbioseContext)
         {
             userContext.Database.EnsureCreated();
             symbioseContext.Database.EnsureCreated();

@@ -9,5 +9,6 @@ namespace Symbiose.ViewModels
     {
         public int UserId { get; set; }
         public string RoleName { get; set; }
+        public int ProjectId { get; set; }
     }
 }
