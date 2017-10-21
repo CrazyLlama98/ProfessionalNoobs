@@ -4,12 +4,9 @@ using System.Text;
 
 namespace Symbiose.Data.Models.Application
 {
-    public class Topic : Entity
+    public class UserProject : Entity
     {
+        public int UserId { get; set; }
         public int ProjectId { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
     }
 }

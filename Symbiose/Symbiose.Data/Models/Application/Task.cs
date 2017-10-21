@@ -6,13 +6,14 @@ namespace Symbiose.Data.Models.Application
 {
     public enum TaskStatus
     {
-        Undefined = 0,
-        InWorking = 1,
-        Completed = 2,
-        Delayed = 3
+        New = 0,
+        Opened = 1,
+        InProgress = 2,
+        Done = 3,
+        Closed = 4
     }
 
-    class Task : Entity
+    public class Task : Entity
     {
         public int ProjectId { get; set; }
 
@@ -28,7 +29,7 @@ namespace Symbiose.Data.Models.Application
 
         public int CreatedById { get; set; }
 
-        public int AssignedToId { get; set; }
+        public int AssigneeId { get; set; }
 
         public TaskStatus TaskStatus { get; set; }
     }

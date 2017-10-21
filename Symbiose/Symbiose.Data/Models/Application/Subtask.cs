@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Symbiose.Data.Models.Application
 {
-    class Subtask : Entity
+    public class Subtask : Entity
     {
-        public int DerivedFromId { get; set; }
+        public int ParentId { get; set; }
 
         public string Name { get; set; }
 
@@ -20,7 +20,7 @@ namespace Symbiose.Data.Models.Application
 
         public int CreatedById { get; set; }
 
-        public int AssignedToId { get; set; }
+        public int AssigneeId { get; set; }
 
         public TaskStatus TaskStatus { get; set; }
     }

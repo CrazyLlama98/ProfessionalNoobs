@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Symbiose.Data.Models.Application
 {
-    class TaskComment : Entity
+    public class TaskComment : Entity
     {
         public int TaskId { get; set; }
 
