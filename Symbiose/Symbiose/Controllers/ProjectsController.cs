@@ -28,6 +28,12 @@ namespace Symbiose.Controllers
         {
             try
             {
+                var projects = await ProjectService.GetAllAsync<Project>();
+                if (projects.Count() == 0)
+                {
+                    return NotFound();
+                }
+
                 return Ok(await ProjectService.GetAllAsync<Project>());
             }
             catch

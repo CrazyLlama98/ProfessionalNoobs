@@ -40,13 +40,27 @@ namespace Symbiose.Controllers
             }
         }
 
-        // GET: /api/tasks/project/{projectId}
-        [HttpGet("project/{projectId}")]
-        public async Task<IActionResult> GetTasksByProjectAsync(int projectId)
+        // GET: /api/tasks/project/{projectId}&{take}&{skip}
+        [HttpGet("project")]
+        public async Task<IActionResult> GetTasksByProjectAsync(int projectId, int take = 0, int skip = 0)
         {
             try
             {
-                return Ok(await TaskService.GetTasksByProject(projectId).ToListAsync());
+                List<Data.Models.Application.Task> projectTasks;
+                if (take > 0)
+                {
+                    projectTasks = await TaskService.Set<Data.Models.Application.Task>().Skip(skip).Take(take).Where(c => c.ProjectId == projectId).ToListAsync();
+                }
+                else
+                {
+                    projectTasks = await TaskService.GetTasksByProject(projectId).ToListAsync();
+                }
+
+                if (projectTasks.Count() == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(projectTasks);
             }
             catch
             {
@@ -54,26 +68,55 @@ namespace Symbiose.Controllers
             }
         }
 
-        // GET: /api/tasks/user
+        // GET: /api/tasks/user/{userId}&{take}&{skip}
         [HttpGet("user")]
-        public async Task<IActionResult> GetTasksOfUserAsync(int userId, int projectId = 0)
+        public async Task<IActionResult> GetTasksOfUserAsync(int userId, int take = 0, int skip = 0)
         {
             try
             {
-                var userTasks = await TaskService.GetTasksByUser(userId).ToListAsync();
-                if (userTasks.Count() > 0)
+                List<Data.Models.Application.Task> userTasks;
+                if (take > 0)
                 {
-                    if (projectId != 0)
-                    {
-                        userTasks = userTasks.Where(c => c.ProjectId == projectId).ToList();
-                        if (userTasks.Count() == 0)
-                        {
-                            return Ok(new List<Data.Models.Application.Task>());
-                        }
-                    }
-                    return Ok(userTasks);
+                    userTasks = await TaskService.Set<Data.Models.Application.Task>().Skip(skip).Take(take).Where(c => c.AssigneeId == userId).ToListAsync();
                 }
-                return Ok(new List<Data.Models.Application.Task>());
+                else
+                {
+                    userTasks = await TaskService.GetTasksByUser(userId).ToListAsync();
+                }
+                
+                if (userTasks.Count() == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(userTasks);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        // GET: /api/tasks/project/{projectId}&{userId}&{take}&{skip}
+        [HttpGet("project/user")]
+        public async Task<IActionResult> GetTasksByProjectAndUserAsync(int projectId, int userId, int take = 0, int skip = 0)
+        {
+            try
+            {
+                List<Data.Models.Application.Task> tasks;
+                if (take > 0)
+                {
+                    tasks = await TaskService.Set<Data.Models.Application.Task>().Skip(skip).Take(take).Where(c => c.ProjectId == projectId && c.AssigneeId == userId).ToListAsync();
+                }
+                else
+                {
+                    tasks = await TaskService.GetTasksByProject(projectId).ToListAsync();
+                }
+
+                if (tasks.Count() == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(tasks);
             }
             catch
             {

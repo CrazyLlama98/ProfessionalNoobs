@@ -32,7 +32,7 @@ namespace Symbiose.Controllers
 
                 if (messages.Count() == 0)
                 {
-                    return Ok(new List<TopicMessage>());
+                    return NotFound();
                 }
 
                 return Ok(messages);
@@ -54,7 +54,7 @@ namespace Symbiose.Controllers
 
                 if (messages.Count() == 0)
                 {
-                    return Ok(new List<TopicMessage>());
+                    return NotFound();
                 }
 
                 return Ok(messages);

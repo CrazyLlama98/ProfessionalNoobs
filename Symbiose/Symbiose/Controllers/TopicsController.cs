@@ -29,6 +29,12 @@ namespace Symbiose.Controllers
         {
             try
             {
+                var topics = await TopicService.GetAllAsync<Topic>();
+                if (topics.Count() == 0)
+                {
+                    return NotFound();
+                }
+
                 return Ok(await TopicService.GetAllAsync<Topic>());
             }
             catch
@@ -46,7 +52,7 @@ namespace Symbiose.Controllers
                 var topic = await TopicService.GetByIdAsync<Topic>(topicId);
                 if (topic == null)
                 {
-                    return StatusCode(StatusCodes.Status404NotFound);
+                    return NotFound();
                 }
 
                 return Ok(topic);
@@ -78,7 +84,13 @@ namespace Symbiose.Controllers
         {
             try
             {
-                return Ok(await TopicService.Set<Topic>().Skip(skip).Take(take).ToListAsync());
+                var topics = await TopicService.Set<Topic>().Skip(skip).Take(take).ToListAsync();
+                if (topics.Count() == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(topics);
             }
             catch
             {
