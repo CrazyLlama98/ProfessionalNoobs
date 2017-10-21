@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Symbiose.Data;
 using Symbiose.Data.Models.Account;
+using Symbiose.Services;
+using Symbiose.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Symbiose.Extensions
@@ -52,6 +52,15 @@ namespace Symbiose.Extensions
                     return Task.FromResult(0);
                 };
             });
+            return services;
+        }
+
+        public static IServiceCollection AddDbServices(this IServiceCollection services)
+        {
+            services.AddDbContext<SymbioseContext>(options => options.UseSqlServer("Server=(local);Initial Catalog=Symbiose;Trusted_Connection=Yes;"));
+            services.AddTransient<IProjectService, ProjectService>()
+                .AddTransient<ITaskService, TaskService>()
+                .AddTransient<ITopicService, TopicService>();
             return services;
         }
     }

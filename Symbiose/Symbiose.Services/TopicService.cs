@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Symbiose.Services
 {
-    class TopicService : GenericDbService, ITopicService
+    public class TopicService : GenericDbService, ITopicService
     {
         public TopicService(SymbioseContext context)
             : base(context)
@@ -21,9 +21,9 @@ namespace Symbiose.Services
             return Context.Set<Topic>().Where(p => p.ProjectId == projectId);
         }
 
-        public IQueryable<TopicMessage> GetMessagesOfTopic(int topicId)
+        public async Task<IEnumerable<TopicMessage>> GetMessagesOfTopicAsync(int topicId)
         {
-            return Context.Set<TopicMessage>().Where(p => p.TopicId == topicId);
+            return await Context.Set<TopicMessage>().Where(p => p.TopicId == topicId).ToListAsync();
         }
     }
 }

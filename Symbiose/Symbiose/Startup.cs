@@ -29,7 +29,8 @@ namespace Symbiose
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthServices()
-                .AddCookieOptions();
+                .AddCookieOptions()
+                .AddDbServices();
             services.AddMvc();
         }
 
@@ -37,6 +38,7 @@ namespace Symbiose
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env, UserContext userContext)
         {
             userContext.Database.EnsureCreated();
+            symbioseContext.Database.EnsureCreated();
             if (env.IsDevelopment())
             {
                 var options = new WebpackDevMiddlewareOptions() { HotModuleReplacement = true };

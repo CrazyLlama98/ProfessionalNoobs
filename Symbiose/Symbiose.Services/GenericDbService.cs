@@ -11,7 +11,7 @@ namespace Symbiose.Services
 {
     public class GenericDbService : IGenericDbService
     {
-        public DbContext Context { get; set; }
+        protected DbContext Context { get; set; }
 
         public GenericDbService(DbContext context)
         {
@@ -31,6 +31,18 @@ namespace Symbiose.Services
         public async Task<T> GetByIdAsync<T>(int id) where T : Entity
         {
             return await Context.Set<T>().FindAsync(id);
+        }
+
+        public async Task AddAsync<T>(T entry) where T : Entity
+        {
+            await Context.Set<T>().AddAsync(entry);
+            await Context.SaveChangesAsync();
+        }
+
+        public async Task AddRangeAsync<T>(IEnumerable<T> entries) where T : Entity
+        {
+            await Context.Set<T>().AddRangeAsync(entries);
+            await Context.SaveChangesAsync();
         }
     }
 }
