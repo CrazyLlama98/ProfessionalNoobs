@@ -1,6 +1,7 @@
 <template>
+<div>
   <v-app toolbar>
-  <v-navigation-drawer persistent enable-resize-watcher disable-route-watcher v-model="drawer" overflow app>
+    <v-navigation-drawer persistent enable-resize-watcher disable-route-watcher v-model="drawer" overflow app>
       <v-menu offset-y full-width>
         <v-list class="pa-1" slot="activator">
           <v-list-tile avatar>
@@ -9,7 +10,6 @@
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title v-text="Username"></v-list-tile-title>
-              <v-list-tile-sub-title>Logged in on Store <b>{{Userdata.StoreID}}</b></v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -27,7 +27,7 @@
             <v-list-tile-title>Discount Simulator</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile to="changeTheStore">
+        <v-list-tile to="asd">
           <v-list-tile-action>
             <v-icon>mdi-store</v-icon>
           </v-list-tile-action>
@@ -47,6 +47,7 @@
       </v-container>
     </main>
   </v-app>
+</div>
 </template>
 
 <script>

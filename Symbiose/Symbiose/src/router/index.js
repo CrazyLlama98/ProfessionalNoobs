@@ -17,8 +17,8 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'Dashboard',
-      component: () => import('@/components/Dashboard')
+      name: 'ProjectsDashboard',
+      component: () => import('@/components/ProjectsDashboard')
     }
   ]
 })
