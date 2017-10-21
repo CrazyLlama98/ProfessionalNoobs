@@ -34,7 +34,7 @@
             <v-list-tile-title>Topics</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile to="/">
+        <v-list-tile to="projectslist">
           <v-list-tile-action>
             <v-icon>mdi-folder-open</v-icon>
           </v-list-tile-action>

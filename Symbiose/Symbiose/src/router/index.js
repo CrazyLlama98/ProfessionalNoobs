@@ -33,7 +33,7 @@ export default new Router({
       ]
     },
     {
-      path: '/',
+      path: '/projectslist',
       name: 'ProjectsList',
       component: () => import('@/components/ProjectsList')
     }

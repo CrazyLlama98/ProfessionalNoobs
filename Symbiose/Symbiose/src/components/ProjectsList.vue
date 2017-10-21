@@ -1,29 +1,38 @@
 <template>
   <v-app toolbar>
-    <v-navigation-drawer persistent enable-resize-watcher disable-route-watcher v-model="drawer" overflow app>
+    <v-toolbar fixed class="blue darken-3" dark app>
       <v-menu offset-y full-width>
-        <v-list class="pa-1" slot="activator">
-          <v-list-tile avatar>
-            <v-list-tile-avatar>
-              <v-icon>mdi-account</v-icon>
-            </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title></v-list-tile-title>
-            </v-list-tile-content>
+          <v-avatar slot="activator">
+            <v-icon>mdi-account</v-icon>
+          </v-avatar>
+        <v-list>
+          <v-list-tile>
+          <v-btn small flat color @click.native="logoff">Logout</v-btn>
           </v-list-tile>
         </v-list>
-        <v-list>
-          <v-btn small flat color class="mx-5" @click.native="logoff">Logout</v-btn>
-        </v-list>
       </v-menu>
-    </v-navigation-drawer>
-    <v-toolbar fixed class="blue darken-3" dark app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Symbiose</v-toolbar-title>
     </v-toolbar>
-    <main>
-      <v-container fluid>
-        <router-view></router-view>
+      <v-container>
+        <v-layout>
+          <v-flex xs12 sm10 md8 lg8 offset-sm1 offset-md2 offset-lg2 pt-5 mt-5>
+            <v-card>
+              <v-card-text>
+                <h3 v-if="projectsList.length > 0" class="text-xs-center">Projects</h3>
+                <v-list two-line>
+                  <div v-for="project in projectsList" :key="project.name">
+                    <v-list-tile v-bind:key="project.name" ripple @click="goToProject">
+                      <v-list-tile-content>
+                        <v-list-tile-title v-html="project.name"></v-list-tile-title>
+                        <v-list-tile-sub-title v-html="project.description"></v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </div>
+                </v-list>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
       </v-container>
     </main>
   </v-app>
@@ -34,10 +43,20 @@ export default {
   data () {
     return {
       right: null,
-      drawer: true
+      drawer: false,
+      projectsList: [
+        {
+          name: 'proiect1',
+          description: 'desc1r'
+        }
+      ]
     }
+  },
+  methods: {
+    goToProject (index) {}
   }
 }
+
 </script>
 <style>
 
