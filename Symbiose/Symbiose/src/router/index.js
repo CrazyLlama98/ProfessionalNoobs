@@ -35,7 +35,7 @@ export default new Router({
       component: () => import('@/components/Project'),
       children: [
         {
-          path: '/tasks',
+          path: 'tasks',
           name: 'Tasks',
           component: () => import('@/components/Tasks'),
           meta: {
@@ -43,7 +43,7 @@ export default new Router({
           }
         },
         {
-          path: '/topics',
+          path: 'topics',
           name: 'Topics',
           component: () => import('@/components/Topics'),
           meta: {
