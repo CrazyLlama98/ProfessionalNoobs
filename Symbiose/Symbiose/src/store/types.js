@@ -1,5 +1,6 @@
 // getters
 export const USER_DATA = 'user/USER_DATA'
+export const USER_NAME = 'user/USER_NAME'
 
 // mutations
 

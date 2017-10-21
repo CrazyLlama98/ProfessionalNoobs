@@ -6,7 +6,7 @@ export default class LoginService {
 
   registerUser (username, email, password) {
     return new Promise((resolve, reject) => {
-      axios.post('api/accounts/register', { username, email, password })
+      axios.post('/api/accounts/register', { username, email, password })
       .then(response => {
         resolve(response)
       })

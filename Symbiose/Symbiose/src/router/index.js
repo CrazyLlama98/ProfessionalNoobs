@@ -6,14 +6,28 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/',
+      name: 'Home',
+      meta: {
+        requireAuth: true
+      },
+      redirect: '/projectsList'
+    },
+    {
       path: '/login',
       name: 'Login',
-      component: () => import('@/components/Login')
+      component: () => import('@/components/Login'),
+      meta: {
+        requireAuth: false
+      }
     },
     {
       path: '/register',
       name: 'Register',
-      component: () => import('@/components/Register')
+      component: () => import('@/components/Register'),
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/project',
@@ -21,21 +35,30 @@ export default new Router({
       component: () => import('@/components/Project'),
       children: [
         {
-          path: '/tasks',
+          path: 'tasks',
           name: 'Tasks',
-          component: () => import('@/components/Tasks')
+          component: () => import('@/components/Tasks'),
+          meta: {
+            requireAuth: true
+          }
         },
         {
-          path: '/topics',
+          path: 'topics',
           name: 'Topics',
-          component: () => import('@/components/Topics')
+          component: () => import('@/components/Topics'),
+          meta: {
+            requireAuth: true
+          }
         }
       ]
     },
     {
       path: '/projectslist',
       name: 'ProjectsList',
-      component: () => import('@/components/ProjectsList')
+      component: () => import('@/components/ProjectsList'),
+      meta: {
+        requireAuth: true
+      }
     }
   ]
 })

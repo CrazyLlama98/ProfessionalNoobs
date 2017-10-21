@@ -68,8 +68,11 @@ export default {
           if (response.status === 200) {
             loginService.isLoggedIn().then(() => {
               if (response.data.status === 1) {
-                console.log('Logged In')
-                this.$router.push('/')
+                if (this.$route.query === {} || this.$route.query.redirect === undefined) {
+                  this.$router.push('/')
+                } else {
+                  this.$router.push(this.$route.query.redirect)
+                }
               } else {
                 this.errors.push(response.data.text)
               }

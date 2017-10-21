@@ -1,27 +1,28 @@
 <template>
   <v-app toolbar>
     <v-toolbar fixed class="blue darken-3" dark app>
-      <v-menu offset-y full-width>
-          <v-avatar slot="activator">
-            <v-icon>mdi-account</v-icon>
-          </v-avatar>
-        <v-list>
-          <v-list-tile>
-          <v-btn small flat color @click.native="logoff">Logout</v-btn>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
       <v-toolbar-title>Symbiose</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <span>Hello, {{UserName}}</span>
+      <v-btn flat color @click.native="logoff" icon>
+        <v-icon>
+          mdi-logout
+        </v-icon>
+      </v-btn>
     </v-toolbar>
+    <v-content>
       <v-container>
         <v-layout>
           <v-flex xs12 sm10 md8 lg8 offset-sm1 offset-md2 offset-lg2 pt-5 mt-5>
             <v-card>
               <v-card-text>
-                <h3 v-if="projectsList.length > 0" class="text-xs-center">Projects</h3>
+                <h4 v-if="projectsList.length > 0">Projects</h4>
                 <v-list two-line>
                   <div v-for="project in projectsList" :key="project.name">
-                    <v-list-tile v-bind:key="project.name" ripple @click="goToProject">
+                    <v-list-tile avatar v-bind:key="project.name" ripple @click="goToProject">
+                      <v-list-tile-avatar>
+                        <v-icon>mdi-projector-screen</v-icon>
+                      </v-list-tile-avatar>
                       <v-list-tile-content>
                         <v-list-tile-title v-html="project.name"></v-list-tile-title>
                         <v-list-tile-sub-title v-html="project.description"></v-list-tile-sub-title>
@@ -34,26 +35,34 @@
           </v-flex>
         </v-layout>
       </v-container>
-    </main>
+    </v-content>
   </v-app>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import * as types from '../store/types'
+import ProjectService from '../services/ProjectService'
+
+let projectService = new ProjectService()
+
 export default {
   data () {
     return {
       right: null,
       drawer: false,
-      projectsList: [
-        {
-          name: 'proiect1',
-          description: 'desc1r'
-        }
-      ]
+      projectsList: []
     }
   },
   methods: {
-    goToProject (index) {}
+    goToProject (index) {
+      console.log(this.$store)
+    }
+  },
+  computed: {
+    ...mapGetters({
+      UserName: types.USER_NAME
+    })
   }
 }
 
