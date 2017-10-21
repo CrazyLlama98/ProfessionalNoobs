@@ -46,10 +46,11 @@ namespace Symbiose.ServiceExtensions
             {
                 options.Cookie.HttpOnly = true;
                 options.Cookie.Expiration = TimeSpan.FromHours(3);
-                options.Events.OnRedirectToLogin = context => new Task(() =>
-                {
-                    context.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                });
+                options.Events.OnRedirectToLogin = context => {
+                    context.Response.Clear();
+                    context.Response.StatusCode = 401;
+                    return Task.FromResult(0);
+                };
             });
             return services;
         }
