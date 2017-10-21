@@ -19,6 +19,11 @@ namespace Symbiose.Services
             return Context.Set<Subtask>().Where(st => st.ParentId == taskId);
         }
 
+        public IQueryable<Subtask> GetSubtasksByUser(int userId)
+        {
+            return Context.Set<Subtask>().Where(st => st.AssigneeId == userId);
+        }
+
         public IQueryable<Task> GetTaskOfUser(int userId)
         {
             return Context.Set<Task>().Where(t => t.AssigneeId == userId);

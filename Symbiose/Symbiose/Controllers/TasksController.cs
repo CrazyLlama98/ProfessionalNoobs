@@ -49,7 +49,7 @@ namespace Symbiose.Controllers
                 List<Data.Models.Application.Task> projectTasks;
                 if (take > 0)
                 {
-                    projectTasks = await TaskService.Set<Data.Models.Application.Task>().Skip(skip).Take(take).Where(c => c.ProjectId == projectId).ToListAsync();
+                    projectTasks = await TaskService.Set<Data.Models.Application.Task>().Where(c => c.ProjectId == projectId).Skip(skip).Take(take).ToListAsync();
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace Symbiose.Controllers
                 List<Data.Models.Application.Task> userTasks;
                 if (take > 0)
                 {
-                    userTasks = await TaskService.Set<Data.Models.Application.Task>().Skip(skip).Take(take).Where(c => c.AssigneeId == userId).ToListAsync();
+                    userTasks = await TaskService.Set<Data.Models.Application.Task>().Where(c => c.AssigneeId == userId).Skip(skip).Take(take).ToListAsync();
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace Symbiose.Controllers
                 List<Data.Models.Application.Task> tasks;
                 if (take > 0)
                 {
-                    tasks = await TaskService.Set<Data.Models.Application.Task>().Skip(skip).Take(take).Where(c => c.ProjectId == projectId && c.AssigneeId == userId).ToListAsync();
+                    tasks = await TaskService.Set<Data.Models.Application.Task>().Where(c => c.ProjectId == projectId && c.AssigneeId == userId).Skip(skip).Take(take).ToListAsync();
                 }
                 else
                 {

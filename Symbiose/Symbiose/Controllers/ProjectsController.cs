@@ -7,6 +7,7 @@ using Symbiose.Services;
 using Symbiose.Data.Models.Application;
 using Symbiose.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,17 +25,57 @@ namespace Symbiose.Controllers
 
         // GET - /api/Projects/ 
         [HttpGet]
-        public async Task<IActionResult> GetProjectsAsync()
+        public async Task<IActionResult> GetProjectsAsync(int take = 0, int skip = 0)
         {
             try
             {
-                var projects = await ProjectService.GetAllAsync<Project>();
+                List<Project> projects;
+
+                if (take > 0)
+                {
+                    projects = await ProjectService.Set<Project>().Skip(skip).Take(take).ToListAsync();
+                }
+                else
+                {
+                    projects = await ProjectService.Set<Project>().ToListAsync();
+                }
+
                 if (projects.Count() == 0)
                 {
                     return NotFound();
                 }
 
                 return Ok(await ProjectService.GetAllAsync<Project>());
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        // GET - /api/Projects/user 
+        [HttpGet]
+        public async Task<IActionResult> GetProjectsByUserAsync(int userId, int take = 0, int skip = 0)
+        {
+            try
+            {
+                List<Project> projects;
+
+                if (take > 0)
+                {
+                    projects = await (await ProjectService.GetProjectsOfUser(userId)).Skip(skip).Take(take).ToListAsync();
+                }
+                else
+                {
+                    projects = await (await ProjectService.GetProjectsOfUser(userId)).ToListAsync();
+                }
+
+                if (projects.Count() == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(projects);
             }
             catch
             {

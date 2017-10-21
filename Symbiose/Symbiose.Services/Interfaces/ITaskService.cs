@@ -15,6 +15,8 @@ namespace Symbiose.Services.Interfaces
 
         IQueryable<Subtask> GetSubtasksOfTask(int taskId);
 
+        IQueryable<Subtask> GetSubtasksByUser(int userId);
+
         IQueryable<Data.Models.Application.Task> GetTaskOfUser(int userId);
 
         IQueryable<Data.Models.Application.Task> GetTaskByStatus(Data.Models.Application.TaskStatus status);
