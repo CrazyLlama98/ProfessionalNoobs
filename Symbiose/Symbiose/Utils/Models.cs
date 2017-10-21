@@ -10,9 +10,9 @@ namespace Symbiose.Utils
         public enum ResponseType
         {
             Undefined = 0,
-            Succesful = 1,
+            Successful = 1,
             Warning = 2,
-            Error = 3
+            Failed = 3
         }
 
         public class Response
