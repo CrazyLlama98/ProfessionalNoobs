@@ -6,7 +6,7 @@ namespace Symbiose.Data.Models.Application
 {
     public class Subtask : Entity
     {
-        public int DerivedFromId { get; set; }
+        public int ParentId { get; set; }
 
         public string Name { get; set; }
 
