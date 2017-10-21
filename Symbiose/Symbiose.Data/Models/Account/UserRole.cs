@@ -4,6 +4,7 @@ namespace Symbiose.Data.Models.Account
 {
     public class UserRole : IdentityRole<int>
     {
-        public int ProjectId { get; set; }
+        public UserRole() : base() { }
+        public UserRole(string roleName) : base(roleName) { }
     }
 }

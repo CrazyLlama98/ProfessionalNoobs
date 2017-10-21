@@ -51,7 +51,6 @@ export default {
           }
         ],
         password: [
-          (p) => !!p || 'Password is required!',
           (p) => p.length >= 8 || 'Password must have at least 8 characters!'
         ]
       },
@@ -68,7 +67,12 @@ export default {
         loginService.logInUser(this.email, this.password).then((response) => {
           if (response.status === 200) {
             loginService.isLoggedIn().then(() => {
-              this.$router.push('/')
+              if (response.data.status === 1) {
+                console.log('Logged In')
+                this.$router.push('/')
+              } else {
+                this.errors.push(response.data.text)
+              }
             }).catch(error => console.log(error))
           } else {
             this.errors.push('Wrong Credentials')
@@ -88,7 +92,8 @@ export default {
   },
   computed: {
     isValid () {
-      return this.email !== '' && this.password !== ''
+      return this.rules.email.reduce((a, b) => a === true && b(this.email) === true, true) &&
+        this.rules.password.reduce((a, b) => a === true && b(this.password) === true, true)
     }
   }
 }

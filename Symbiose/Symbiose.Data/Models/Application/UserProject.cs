@@ -8,5 +8,6 @@ namespace Symbiose.Data.Models.Application
     {
         public int UserId { get; set; }
         public int ProjectId { get; set; }
+        public string UserRoleName { get; set; }
     }
 }
