@@ -32,7 +32,7 @@ namespace Symbiose.Controllers
 
                 if (messages.Count() == 0)
                 {
-                    return Ok(new List<TopicMessage>());
+                    return NotFound();
                 }
 
                 return Ok(messages);
@@ -54,7 +54,7 @@ namespace Symbiose.Controllers
 
                 if (messages.Count() == 0)
                 {
-                    return Ok(new List<TopicMessage>());
+                    return NotFound();
                 }
 
                 return Ok(messages);
@@ -80,7 +80,7 @@ namespace Symbiose.Controllers
             }
         }
 
-        // GET: /api/TopicMessage/Message/{id}
+        // GET: /api/TopicMessages/Message/{id}
         [HttpGet("Message/{messageId}")]
         public async Task<IActionResult> GetMessageById(int messageId)
         {
@@ -93,6 +93,21 @@ namespace Symbiose.Controllers
                 }
 
                 return Ok(message);
+            }
+            catch
+            {
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
+            }
+        }
+
+        // POST: /api/TopicMessages/edit/{messageId}
+        [HttpPost("edit/{messageId}")]
+        public async Task<IActionResult> EditTopicMessage(int messageId, [FromBody] TopicMessage message)
+        {
+            try
+            {
+                await TopicService.UpdateAsync(messageId, message);
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Topic Message Edited!" });
             }
             catch
             {

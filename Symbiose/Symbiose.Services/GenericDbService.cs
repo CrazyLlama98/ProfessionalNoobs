@@ -6,6 +6,7 @@ using Symbiose.Data.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Symbiose.Services
 {
@@ -43,6 +44,32 @@ namespace Symbiose.Services
         {
             await Context.Set<T>().AddRangeAsync(entries);
             await Context.SaveChangesAsync();
+        }
+
+        public virtual async Task UpdateAsync<T>(int id, T entry) where T : Entity
+        {
+            try
+            {
+                var entryToUpdate = await GetByIdAsync<T>(id);
+                if (entryToUpdate == null)
+                {
+                    return;
+                }
+
+                foreach (var props in entryToUpdate.GetType().GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance))
+                {
+                    var initialValue = props.GetValue(entryToUpdate);
+                    var newValue = props.GetValue(entry);
+                    if (!Equals(initialValue, newValue))
+                        props.SetValue(entryToUpdate, newValue);
+                }
+                Context.Set<T>().Update(entryToUpdate);
+                await Context.SaveChangesAsync();
+            }
+            catch
+            {
+                return;
+            }
         }
     }
 }
