@@ -47,6 +47,21 @@ namespace Symbiose.Controllers
             try
             {
                 return Ok(await TaskService.GetTasksByProject(projectId).ToListAsync());
+                List<Data.Models.Application.Task> projectTasks;
+                if (take > 0)
+                {
+                    projectTasks = await TaskService.Set<Data.Models.Application.Task>().Where(c => c.ProjectId == projectId).Skip(skip).Take(take).ToListAsync();
+                }
+                else
+                {
+                    projectTasks = await TaskService.GetTasksByProject(projectId).ToListAsync();
+                }
+
+                if (projectTasks.Count() == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(projectTasks);
             }
             catch
             {
@@ -63,15 +78,52 @@ namespace Symbiose.Controllers
                 var userTasks = await TaskService.GetTasksByUser(userId).ToListAsync();
                 if (userTasks.Count() > 0)
                 {
-                    if (projectId != 0)
+                    userTasks = await TaskService.Set<Data.Models.Application.Task>().Where(c => c.AssigneeId == userId).Skip(skip).Take(take).ToListAsync();
                     {
                         userTasks = userTasks.Where(c => c.ProjectId == projectId).ToList();
                         if (userTasks.Count() == 0)
                         {
                             return Ok(new List<Data.Models.Application.Task>());
                         }
+                }
+                else
+                {
+                    userTasks = await TaskService.GetTasksByUser(userId).ToListAsync();
+                }
+                
+                if (userTasks.Count() == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(userTasks);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        // GET: /api/tasks/project/{projectId}&{userId}&{take}&{skip}
+        [HttpGet("project/user")]
+        public async Task<IActionResult> GetTasksByProjectAndUserAsync(int projectId, int userId, int take = 0, int skip = 0)
+        {
+            try
+            {
+                List<Data.Models.Application.Task> tasks;
+                if (take > 0)
+                {
+                    tasks = await TaskService.Set<Data.Models.Application.Task>().Where(c => c.ProjectId == projectId && c.AssigneeId == userId).Skip(skip).Take(take).ToListAsync();
                     }
                     return Ok(userTasks);
+                }
+                else
+                {
+                    tasks = await TaskService.GetTasksByProject(projectId).ToListAsync();
+                }
+
+                if (tasks.Count() == 0)
+                {
+                    return NotFound();
                 }
                 return Ok(new List<Data.Models.Application.Task>());
             }
@@ -96,5 +148,19 @@ namespace Symbiose.Controllers
             }
         }
 
+        // POST: /api/tasks/edit/{taskId}
+        [HttpPost("edit/{taskId}")]
+        public async Task<IActionResult> EditTask(int taskId, [FromBody] Data.Models.Application.Task task)
+        {
+            try
+            {
+                await TaskService.UpdateAsync<Data.Models.Application.Task>(taskId, task);
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Task Edited!" });
+            }
+            catch
+            {
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
+            }
+        }
     }
 }
