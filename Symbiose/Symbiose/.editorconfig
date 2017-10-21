@@ -12,6 +12,3 @@ trim_trailing_whitespace = true
 
 [*.cs]
 indent_size = 4
-
-[*.vue]
-indent_size = 2

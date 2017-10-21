@@ -6,7 +6,7 @@ export default class LoginService {
 
   registerUser (username, email, password) {
     return new Promise((resolve, reject) => {
-      axios.post('api/account/register', { username, email, password })
+      axios.post('api/accounts/register', { username, email, password })
       .then(response => {
         resolve(response)
       })
@@ -18,7 +18,7 @@ export default class LoginService {
 
   logInUser (email, password) {
     return new Promise((resolve, reject) => {
-      axios.post('/api/account/login', { email, password })
+      axios.post('/api/accounts/login', { email, password })
       .then(response => {
         resolve(response)
       })
@@ -30,7 +30,7 @@ export default class LoginService {
 
   logOffUser () {
     return new Promise((resolve, reject) => {
-      axios.post('/api/account/logoff')
+      axios.post('/api/accounts/logoff')
       .then(response => {
         resolve(response)
       })
@@ -42,7 +42,7 @@ export default class LoginService {
 
   isLoggedIn () {
     return new Promise((resolve, reject) => {
-      axios.post('/api/account/identity')
+      axios.post('/api/accounts/identity')
       .then(response => {
         resolve(response)
       })

@@ -80,7 +80,12 @@ export default {
       if (this.formCheck()) {
         loginService.registerUser(this.username, this.email, this.password).then((response) => {
           if (response.status === 200) {
-            this.$router.push('/login')
+            if (response.data.status === 1) {
+              console.log('Registered')
+              this.$router.push('/login')
+            } else {
+              this.errors.push(response.data.text)
+            }
           } else {
             this.errors.push(response.data.text)
           }
