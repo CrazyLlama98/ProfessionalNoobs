@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Symbiose.ServiceExtensions
+namespace Symbiose.Extensions
 {
     public static class ServiceExtensions
     {
