@@ -13,6 +13,9 @@ const getters = {
   },
   [types.USER_NAME]: (state) => {
     return state.Userdata.userName
+  },
+  [types.USER_ID]: (state) => {
+    return state.Userdata.id
   }
 }
 

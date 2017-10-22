@@ -16,7 +16,8 @@
           <v-flex xs12 sm10 md8 lg8 offset-sm1 offset-md2 offset-lg2 pt-5 mt-5>
             <v-card>
               <v-card-text>
-                <h4 v-if="projectsList.length > 0">Projects</h4>
+                <h4>My Projects</h4>
+                <h5 v-if="projectsList.length === 0">You have no projects for now!</h5>
                 <v-list two-line>
                   <div v-for="project in projectsList" :key="project.name">
                     <v-list-tile avatar v-bind:key="project.name" ripple @click="goToProject">
@@ -61,8 +62,16 @@ export default {
   },
   computed: {
     ...mapGetters({
-      UserName: types.USER_NAME
+      UserName: types.USER_NAME,
+      UserId: types.USER_ID
     })
+  },
+  created () {
+    projectService.getProjectsByUser(this.UserId)
+      .then(response => {
+        this.projectsList = response.data
+      })
+      .catch(error => console.log(error))
   }
 }
 

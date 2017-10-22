@@ -50,7 +50,8 @@ namespace Symbiose.Accounts
                         UserName = account.UserName,
                         Email = account.Email,
                         Roles = ProjectService.Set<UserProject>().Where(up => roleNames.Any(r => r == up.UserRoleName))
-                        .Select(up => new ProjectRole { ProjectId = up.ProjectId, RoleName = up.UserRoleName }).ToListAsync().Result
+                        .Select(up => new ProjectRole { ProjectId = up.ProjectId, RoleName = up.UserRoleName }).ToListAsync().Result,
+                        Id = account.Id
                     });
                 }
                 return Unauthorized();
