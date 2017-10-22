@@ -26,7 +26,7 @@ export default new Router({
       name: 'Register',
       component: () => import('@/components/Register'),
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {
