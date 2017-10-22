@@ -7,6 +7,7 @@ using Symbiose.Services.Interfaces;
 using Symbiose.Data.Models.Application;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Symbiose.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -98,6 +99,21 @@ namespace Symbiose.Controllers
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        //POST: /api/Subtasks/AddNewSubtask
+        [HttpPost("AddNewSubtask")]
+        public async Task<IActionResult> AddNewTopic([FromBody] Subtask subtask)
+        {
+            try
+            {
+                await TaskService.AddAsync<Subtask>(subtask);
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Topic Added!" });
+            }
+            catch
+            {
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
             }
         }
     }
