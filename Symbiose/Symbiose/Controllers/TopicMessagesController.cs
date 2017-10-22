@@ -86,7 +86,7 @@ namespace Symbiose.Controllers
         {
             try
             {
-                var message = TopicService.GetByIdAsync<TopicMessage>(messageId);
+                var message = await TopicService.GetByIdAsync<TopicMessage>(messageId);
                 if (message != null)
                 {
                     return NotFound(new Utils.Models.Response { Status = Utils.Models.ResponseType.Warning, Text = "Message not found!" });
