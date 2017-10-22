@@ -17,7 +17,7 @@ namespace Symbiose.Extensions
         {
             services.AddDbContext<UserContext>(options =>
             {
-                options.UseSqlServer("Server=(local);Initial Catalog=SymbioseUsers;Trusted_Connection=Yes;");
+                options.UseSqlServer("Server=tcp:symbiose.database.windows.net,1433;Initial Catalog=SymbioseUsers;Persist Security Info=False;User ID=crazyllama98;Password=123Symbiose123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             });
             services.AddIdentity<User, UserRole>()
                 .AddEntityFrameworkStores<UserContext>();
@@ -57,7 +57,7 @@ namespace Symbiose.Extensions
 
         public static IServiceCollection AddDbServices(this IServiceCollection services)
         {
-            services.AddDbContext<SymbioseContext>(options => options.UseSqlServer("Server=(local);Initial Catalog=Symbiose;Trusted_Connection=Yes;"));
+            services.AddDbContext<SymbioseContext>(options => options.UseSqlServer("Server=tcp:symbiose.database.windows.net,1433;Initial Catalog=Symbiose;Persist Security Info=False;User ID=crazyllama98;Password=123Symbiose123;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=30;"));
             services.AddTransient<IProjectService, ProjectService>()
                 .AddTransient<ITaskService, TaskService>()
                 .AddTransient<ITopicService, TopicService>();
