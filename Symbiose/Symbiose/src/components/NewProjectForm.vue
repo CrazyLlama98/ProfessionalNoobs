@@ -67,7 +67,7 @@ export default {
             if (response.status === 200 && response.data.status === 1) {
               loginService.addToRole({ UserId: this.project.CreatorId, RoleName: 'Project Administrator', ProjectId: response.data.value })
                 .then(responseRole => {
-                  if (responseRole.status == 200 && responseRole.data.status == 1) {
+                  if (responseRole.status === 200 && responseRole.data.status === 1) {
                     this.$router.push('/projectsList')
                   }
                 })
