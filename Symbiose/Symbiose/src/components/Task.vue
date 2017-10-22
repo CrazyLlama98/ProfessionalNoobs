@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     close () {
-      this.$router.replace('/project/tasks')
+      this.$router.replace('/project/' + this.$route.params.id)
     },
     addMessage () {
 

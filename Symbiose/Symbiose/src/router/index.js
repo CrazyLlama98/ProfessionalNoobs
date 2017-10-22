@@ -79,6 +79,17 @@ export default new Router({
               meta: {
                 requireAuth: true
               }
+            },
+            {
+              path: 'addTopic',
+              name: 'addTopic',
+              component: () => import('@/components/addTopic'),
+              meta: {
+                requireAuth: true
+              },
+              props: {
+                dialog: true
+              }
             }
           ]
         }

@@ -38,4 +38,16 @@ export default class TopicService {
         })
     })
   }
+
+  postNewTopic (newTopic) {
+    return new Promise((resolve, reject) => {
+      axios.post('/api/topics/AddNewTopic', newTopic)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  }
 }
