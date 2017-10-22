@@ -14,14 +14,10 @@
       <v-container>
         <v-layout>
           <v-flex xs12 sm10 md8 lg8 offset-sm1 offset-md2 offset-lg2 pt-5 mt-5>
-            <v-card v-if="projectsList.length > 0">
+            <v-card>
               <v-card-text>
-<<<<<<< HEAD
                 <h4>My Projects</h4>
                 <h5 v-if="projectsList.length === 0">You have no projects for now!</h5>
-=======
-                <h4>Projects</h4>
->>>>>>> added-task-and-topic
                 <v-list two-line>
                   <div v-for="project in projectsList" :key="project.name">
                     <v-list-tile avatar v-bind:key="project.name" ripple @click="goToProject">
@@ -47,6 +43,10 @@
 <script>
 import {mapGetters} from 'vuex'
 import * as types from '../store/types'
+
+import ProjectService from '../services/ProjectService'
+
+let projectService = new ProjectService()
 
 export default {
   data () {
