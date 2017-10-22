@@ -26,4 +26,16 @@ export default class ProjectService {
         })
     })
   }
+
+  getProjectById (id) {
+    return new Promise((resolve, reject) => {
+      axios.get('/api/projects/' + id)
+        .then(result => {
+          resolve(result)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  }
 }

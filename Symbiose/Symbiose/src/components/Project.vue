@@ -55,12 +55,33 @@
 </template>
 
 <script>
+import ProjectService from '../services/ProjectService'
+
+let projectService = new ProjectService()
+
 export default {
   data () {
     return {
       right: null,
-      drawer: true
+      drawer: true,
+      currentProject: {}
     }
+  },
+  methods: {
+    getProjectById () {
+      projectService.getProjectById(this.$route.param.id)
+      .then(response => {
+        this.currentProject = response.data
+      })
+      .catch(error => console.log(error))
+    }
+  },
+  mounted () {
+    this.getProjectById()
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.getProjectById()
+    next()
   }
 }
 </script>
