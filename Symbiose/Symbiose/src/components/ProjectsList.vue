@@ -18,7 +18,7 @@
               <v-card-text>
                 <h4>My Projects</h4>
                 <h5 v-if="projectsList.length === 0">You have no projects for now!</h5>
-                <v-list two-line>
+                <v-list three-line>
                   <div v-for="project in projectsList" :key="project.name">
                     <v-list-tile avatar v-bind:key="project.name" ripple @click="goToProject">
                       <v-list-tile-avatar>
@@ -27,6 +27,7 @@
                       <v-list-tile-content>
                         <v-list-tile-title v-html="project.name"></v-list-tile-title>
                         <v-list-tile-sub-title v-html="project.description"></v-list-tile-sub-title>
+                        <v-list-tile-sub-title>You are {{project.projectRole}}</v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
                   </div>
@@ -35,6 +36,10 @@
             </v-card>
           </v-flex>
         </v-layout>
+        <v-btn class="blue darken-3" dark fixed bottom right fab to="/projectsList/addNewProject">
+          <v-icon>add</v-icon>
+        </v-btn>
+        <router-view></router-view>
       </v-container>
     </v-content>
   </v-app>
@@ -58,20 +63,29 @@ export default {
   methods: {
     goToProject (index) {
       console.log(this.$store)
+    },
+    getProjects () {
+      projectService.getProjectsByUser(this.UserId)
+      .then(response => {
+        this.projectsList = response.data
+        for (var i in this.projectsList) {
+          this.projectsList[i].projectRole = this.Roles.find(item => item.projectId === this.projectsList[i].id).roleName
+        }
+      })
+      .catch(error => console.log(error))
     }
   },
   computed: {
     ...mapGetters({
       UserName: types.USER_NAME,
-      UserId: types.USER_ID
+      UserId: types.USER_ID,
+      Roles: types.USER_ROLES
     })
   },
-  created () {
-    projectService.getProjectsByUser(this.UserId)
-      .then(response => {
-        this.projectsList = response.data
-      })
-      .catch(error => console.log(error))
+  beforeRouteUpdate (to, from, next) {
+    console.log('ok')
+    this.getProjects()
+    next()
   }
 }
 

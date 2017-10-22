@@ -14,4 +14,16 @@ export default class ProjectService {
         })
     })
   }
+
+  postNewProject (newProject) {
+    return new Promise((resolve, reject) => {
+      axios.post('/api/Projects/addNewProject', newProject)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  }
 }
