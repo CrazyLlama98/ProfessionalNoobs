@@ -48,6 +48,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import * as types from '../store/types'
+
 import ProjectService from '../services/ProjectService'
 
 let projectService = new ProjectService()
