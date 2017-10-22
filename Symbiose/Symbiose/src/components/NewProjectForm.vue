@@ -32,9 +32,11 @@
 
 <script>
 import ProjectService from '../services/ProjectService'
+import LoginService from '../services/LoginService'
 import * as types from '../store/types'
 
 let projectService = new ProjectService()
+let loginService = new LoginService()
 
 export default {
   data () {
@@ -63,7 +65,13 @@ export default {
         projectService.postNewProject(this.project)
           .then(response => {
             if (response.status === 200 && response.data.status === 1) {
-              this.$router.push('/projectsList')
+              loginService.addToRole({ UserId: this.project.CreatorId, RoleName: 'Project Administrator', ProjectId: response.data.value })
+                .then(responseRole => {
+                  if (responseRole.status == 200 && responseRole.data.status == 1) {
+                    this.$router.push('/projectsList')
+                  }
+                })
+                .catch(error => console.log(error))
             }
           })
           .catch(error => console.log(error))

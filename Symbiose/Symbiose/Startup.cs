@@ -47,6 +47,7 @@ namespace Symbiose
             }
             app.UseAuthentication();
             await app.EnsureRolesCreatedAsync(Configuration);
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {

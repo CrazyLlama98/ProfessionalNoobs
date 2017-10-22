@@ -90,7 +90,8 @@ namespace Symbiose.Controllers
             try
             {
                 await ProjectService.AddAsync(project);
-                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Project Added!" });
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Project Added!",
+                    Value = project.Id });
             }
             catch
             {

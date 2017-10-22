@@ -40,6 +40,14 @@ export default class LoginService {
     })
   }
 
+  addToRole (roleProject) {
+    return new Promise((resolve, reject) => {
+      axios.post('/api/accounts/addToRole', roleProject)
+        .then(response => resolve(response))
+        .catch(error => reject(error))
+    })
+  }
+
   isLoggedIn () {
     return new Promise((resolve, reject) => {
       axios.post('/api/accounts/identity')
