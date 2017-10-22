@@ -89,6 +89,9 @@ export default {
     console.log('ok')
     this.getProjects()
     next()
+  },
+  created () {
+    this.getProjects()
   }
 }
 
