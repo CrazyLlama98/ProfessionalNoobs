@@ -30,7 +30,7 @@ export default new Router({
       }
     },
     {
-      path: '/project',
+      path: '/project/:id',
       name: 'Project',
       component: () => import('@/components/Project'),
       children: [
@@ -51,7 +51,6 @@ export default new Router({
               }
             }
           ]
-
         },
         {
           path: 'topics',
