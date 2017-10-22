@@ -20,7 +20,7 @@
                 <h5 v-if="projectsList.length === 0">You have no projects for now!</h5>
                 <v-list three-line>
                   <div v-for="project in projectsList" :key="project.name">
-                    <v-list-tile avatar v-bind:key="project.name" ripple @click="goToProject">
+                    <v-list-tile avatar v-bind:key="project.name" ripple @click="goToProject(project.id)">
                       <v-list-tile-avatar>
                         <v-icon>mdi-projector-screen</v-icon>
                       </v-list-tile-avatar>
@@ -50,8 +50,10 @@ import {mapGetters} from 'vuex'
 import * as types from '../store/types'
 
 import ProjectService from '../services/ProjectService'
+import LoginService from '../services/LoginService'
 
 let projectService = new ProjectService()
+let loginService = new LoginService()
 
 export default {
   data () {
@@ -63,7 +65,7 @@ export default {
   },
   methods: {
     goToProject (index) {
-      console.log(this.$store)
+      this.$router.push('/project/' + index)
     },
     getProjects () {
       projectService.getProjectsByUser(this.UserId)

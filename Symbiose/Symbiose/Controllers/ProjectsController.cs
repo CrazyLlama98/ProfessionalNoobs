@@ -53,6 +53,20 @@ namespace Symbiose.Controllers
             }
         }
 
+        // GET - /api/Projects/{id}
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetProjectById(int id)
+        {
+            try
+            {
+                return Ok(await ProjectService.GetByIdAsync<Project>(id));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         // GET - /api/Projects/user 
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetProjectsByUserAsync(int userId, int take = 0, int skip = 0)
