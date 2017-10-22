@@ -16,6 +16,9 @@ const getters = {
   },
   [types.USER_ID]: (state) => {
     return state.Userdata.id
+  },
+  [types.USER_ROLES]: (state) => {
+    return state.Userdata.roles
   }
 }
 

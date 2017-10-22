@@ -58,7 +58,20 @@ export default new Router({
       component: () => import('@/components/ProjectsList'),
       meta: {
         requireAuth: true
-      }
+      },
+      children: [
+        {
+          path: 'addNewProject',
+          name: 'addNewProject',
+          component: () => import('@/components/NewProjectForm'),
+          meta: {
+            requireAuth: true
+          },
+          props: {
+            dialog: true
+          }
+        }
+      ]
     }
   ]
 })
