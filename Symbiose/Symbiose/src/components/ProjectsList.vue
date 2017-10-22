@@ -50,10 +50,8 @@ import {mapGetters} from 'vuex'
 import * as types from '../store/types'
 
 import ProjectService from '../services/ProjectService'
-import LoginService from '../services/LoginService'
 
 let projectService = new ProjectService()
-let loginService = new LoginService()
 
 export default {
   data () {
@@ -86,11 +84,10 @@ export default {
     })
   },
   beforeRouteUpdate (to, from, next) {
-    console.log('ok')
     this.getProjects()
     next()
   },
-  created () {
+  mounted () {
     this.getProjects()
   }
 }

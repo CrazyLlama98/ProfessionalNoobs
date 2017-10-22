@@ -5,7 +5,7 @@
           <v-btn icon @click="close" dark>
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Task_Title</v-toolbar-title>
+          <v-toolbar-title>{{task.name}}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-select
@@ -27,7 +27,7 @@
               name="topic_description"
               multi-line
               readonly
-            >Task_description</div>
+            >{{task.description}}</div>
           </v-flex>
         </v-layout>
         <v-layout>
@@ -96,21 +96,23 @@ export default {
     },
     addMessage () {
 
-    },
-    computed: {
-      ...mapGetters({
-        UserName: types.USER_NAME,
-        UserId: types.USER_ID
-      })
-    },
-    created () {
-      taskService.getTasksById(this.$route.params.id)
-      .then(response => {
-        this.task = response.data
-      })
-        .catch(error => console.log(error))
     }
+  },
+  computed: {
+    ...mapGetters({
+      UserName: types.USER_NAME,
+      UserId: types.USER_ID
+    })
+  },
+  mounted () {
+    taskService.getTasksById(this.$route.params.id)
+    .then(response => {
+      this.task = response.data
+      console.log(response.data)
+    })
+    .catch(error => console.log(error))
   }
 }
+
 </script>
 

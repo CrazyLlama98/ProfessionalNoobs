@@ -33,6 +33,7 @@ export default new Router({
       path: '/project/:id',
       name: 'Project',
       component: () => import('@/components/Project'),
+      redirect: '/project/:id/tasks',
       children: [
         {
           path: 'tasks',
@@ -48,6 +49,17 @@ export default new Router({
               component: () => import('@/components/Task'),
               meta: {
                 requireAuth: true
+              }
+            },
+            {
+              path: 'addTask',
+              name: 'addTask',
+              component: () => import('@/components/addTask'),
+              meta: {
+                requireAuth: true
+              },
+              props: {
+                dialog: true
               }
             }
           ]

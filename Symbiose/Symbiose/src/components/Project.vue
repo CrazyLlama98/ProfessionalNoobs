@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     getProjectById () {
-      projectService.getProjectById(this.$route.param.id)
+      projectService.getProjectById(this.$route.params.id)
       .then(response => {
         this.currentProject = response.data
       })

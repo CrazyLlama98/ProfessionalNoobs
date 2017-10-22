@@ -38,4 +38,16 @@ export default class TaskService {
         })
     })
   }
+
+  postNewTask (newTask) {
+    return new Promise((resolve, reject) => {
+      axios.post('/api/Tasks/addNewTask', newTask)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  }
 }

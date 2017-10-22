@@ -4,7 +4,7 @@
       <v-flex xs12 sm10 md8 lg8 offset-sm1 offset-md2 offset-lg2>
         <v-card>
           <v-card-text>
-            <h4>My Projects</h4>
+            <h4>My Tasks</h4>
             <h5 v-if="tasksList.length === 0">You have no tasks for now!</h5>
             <v-list two-line>
               <div v-for="task in tasksList" :key="task.name">
@@ -19,8 +19,8 @@
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-btn fab dark class="blue" right bottom fixed @click="addTask">
-              <v-icon>add</v-icon>
+      <v-btn fab dark class="blue" right bottom fixed :to="$route.fullPath +'/addTask'">
+          <v-icon>add</v-icon>
       </v-btn>
     </v-layout>
     <router-view></router-view>
@@ -53,7 +53,8 @@ export default {
       UserId: types.USER_ID
     })
   },
-  created () {
+  mounted () {
+    console.log(this.$route)
     taskService.getTasksByUser(this.UserId)
       .then(response => {
         this.tasksList = response.data
