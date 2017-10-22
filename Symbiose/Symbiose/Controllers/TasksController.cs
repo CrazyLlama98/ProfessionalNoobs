@@ -70,7 +70,7 @@ namespace Symbiose.Controllers
         }
 
         // GET: /api/tasks/user/{userId}&{take}&{skip}
-        [HttpGet("user")]
+        [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetTasksOfUserAsync(int userId, int take = 0, int skip = 0)
         {
             try
@@ -98,7 +98,7 @@ namespace Symbiose.Controllers
         }
 
         // GET: /api/tasks/project/{projectId}&{userId}&{take}&{skip}
-        [HttpGet("project/user")]
+        [HttpGet("project/user/{projectId}&{userId}")]
         public async Task<IActionResult> GetTasksByProjectAndUserAsync(int projectId, int userId, int take = 0, int skip = 0)
         {
             try

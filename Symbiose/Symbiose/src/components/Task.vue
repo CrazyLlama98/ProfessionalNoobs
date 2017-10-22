@@ -69,6 +69,11 @@
     </v-dialog>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+import * as types from '../store/types'
+import TaskService from '../services/TaskService'
+
+let taskService = new TaskService()
 export default {
   data () {
     return {
@@ -82,16 +87,7 @@ export default {
           text: 'In work'
         }
       ],
-      task: {
-        status: 'Done',
-        messagesList: [
-          {
-            author: 'gigi',
-            message: 'salutasdf asdf asdf asdfasdf asdfasdf sd asdf asdf asdf asdf asdf asdf asdf asdf sad fsad fsad fsad fas dasdf adsf asdf asdf asdf asdf asdf asdf asd',
-            dateModified: '1995-07-11'
-          }
-        ]
-      }
+      task: {}
     }
   },
   methods: {
@@ -100,6 +96,19 @@ export default {
     },
     addMessage () {
 
+    },
+    computed: {
+      ...mapGetters({
+        UserName: types.USER_NAME,
+        UserId: types.USER_ID
+      })
+    },
+    created () {
+      taskService.getTasksById(this.$route.params.id)
+      .then(response => {
+        this.task = response.data
+      })
+        .catch(error => console.log(error))
     }
   }
 }

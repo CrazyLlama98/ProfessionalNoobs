@@ -5,12 +5,12 @@
           <v-btn icon @click="close" dark>
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Topic_Title</v-toolbar-title>
+          <v-toolbar-title>{{ topic.name }}</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
           <v-layout mb-4>
             <v-flex xs3 sm2 md1 offset-lg1>
-              <v-subheader>Description</v-subheader>
+              <v-subheader>{{ topic.description }}</v-subheader>
             </v-flex>
             <v-flex xs8 elevation-1 pa-2>
             <div
@@ -32,7 +32,7 @@
               <span>{{ message.author }}</span>
               </v-layout>
               <v-layout row>
-              <span>{{ message.dateModified }}</span>
+              <span>{{ message.datemodified }}</span>
               </v-layout>
             </v-flex>
             <v-flex xs8 elevation-1 pa-2>
@@ -59,17 +59,18 @@
     </v-dialog>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+import * as types from '../store/types'
+import TopicService from '../services/TopicService'
+
+let topicService = new TopicService()
+
 export default {
   data () {
     return {
       dialog: true,
-      messagesList: [
-        {
-          author: 'gigi',
-          message: 'salutasdf asdf asdf asdfasdf asdfasdf sd asdf asdf asdf asdf asdf asdf asdf asdf sad fsad fsad fsad fas dasdf adsf asdf asdf asdf asdf asdf asdf asd',
-          dateModified: '1995-07-11'
-        }
-      ]
+      messagesList: [],
+      topic: {}
     }
   },
   methods: {
@@ -78,6 +79,25 @@ export default {
     },
     addMessage () {
 
+    },
+    computed: {
+      ...mapGetters({
+        UserName: types.USER_NAME,
+        UserId: types.USER_ID
+      })
+    },
+    created () {
+      topicService.getMessagesByTopicId(this.$route.params.id)
+      .then(response => {
+        this.messagesList = response.data
+      })
+      .catch(error => console.log(error))
+
+      topicService.getTopicById(this.$route.params.id)
+      .then(response => {
+        this.topic = response.data
+      })
+      .catch(error => console.log(error))
     }
   }
 }
