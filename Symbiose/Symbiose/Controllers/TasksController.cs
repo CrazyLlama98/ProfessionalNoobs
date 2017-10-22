@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Symbiose.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Symbiose.Data.Models.Application;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,7 +29,7 @@ namespace Symbiose.Controllers
             try
             {
                 var task = await TaskService.GetByIdAsync<Data.Models.Application.Task>(taskId);
-                if (task != null)
+                if (task == null)
                 {
                     return NotFound();
                 }
@@ -41,7 +42,7 @@ namespace Symbiose.Controllers
         }
 
         // GET: /api/tasks/project/{projectId}&{take}&{skip}
-        [HttpGet("project")]
+        [HttpGet("project/{projectId}")]
         public async Task<IActionResult> GetTasksByProjectAsync(int projectId, int take = 0, int skip = 0)
         {
             try
@@ -139,6 +140,21 @@ namespace Symbiose.Controllers
             }
         }
 
+        // POST: /api/tasks/AddNewComment
+        [HttpPost("AddNewComment")]
+        public async Task<IActionResult> AddNewTaskComment([FromBody] TaskComment comment)
+        {
+            try
+            {
+                await TaskService.AddAsync(comment);
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Task Comment Added!" });
+            }
+            catch
+            {
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
+            }
+        }
+
         // POST: /api/tasks/edit/{taskId}
         [HttpPost("edit/{taskId}")]
         public async Task<IActionResult> EditTask(int taskId, [FromBody] Data.Models.Application.Task task)
@@ -147,6 +163,27 @@ namespace Symbiose.Controllers
             {
                 await TaskService.UpdateAsync<Data.Models.Application.Task>(taskId, task);
                 return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Successful, Text = "Task Edited!" });
+            }
+            catch
+            {
+                return Ok(new Utils.Models.Response { Status = Utils.Models.ResponseType.Failed, Text = "Error!" });
+            }
+        }
+
+        // GET: /api/tasks/comments/{taskId}
+        [HttpPost("comments/{taskId}")]
+        public async Task<IActionResult> GetTaskComments(int taskId)
+        {
+            try
+            {
+                var comments = await TaskService.GetTaskComments(taskId).ToListAsync();
+
+                if (comments.Count() == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(comments);
             }
             catch
             {

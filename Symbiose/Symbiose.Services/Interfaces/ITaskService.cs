@@ -22,5 +22,7 @@ namespace Symbiose.Services.Interfaces
         IQueryable<Data.Models.Application.Task> GetTaskByStatus(Data.Models.Application.TaskStatus status);
 
         IQueryable<Data.Models.Application.Subtask> GetSubtaskByStatus(Data.Models.Application.TaskStatus status);
+
+        IQueryable<TaskComment> GetTaskComments(int taskId);
     }
 }

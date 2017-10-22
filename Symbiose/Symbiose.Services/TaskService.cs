@@ -48,5 +48,10 @@ namespace Symbiose.Services
         {
             return Context.Set<Subtask>().Where(st => st.TaskStatus == status);
         }
+
+        public IQueryable<TaskComment> GetTaskComments(int taskId)
+        {
+            return Context.Set<TaskComment>().Where(tc => tc.TaskId == taskId);
+        }
     }
 }
