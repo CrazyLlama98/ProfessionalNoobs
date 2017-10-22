@@ -54,7 +54,7 @@ namespace Symbiose.Controllers
         }
 
         // GET - /api/Projects/user 
-        [HttpGet]
+        [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetProjectsByUserAsync(int userId, int take = 0, int skip = 0)
         {
             try
