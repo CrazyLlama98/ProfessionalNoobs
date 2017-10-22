@@ -4,10 +4,11 @@
       <v-flex xs12 sm10 md8 lg8 offset-sm1 offset-md2 offset-lg2>
         <v-card>
           <v-card-text>
-            <h3 v-if="topicsList.length > 0" class="text-xs-center">Topics</h3>
+            <h4>Topics</h4>
+            <h5 v-if="topicsList.length === 0">There are no topics for now!</h5>
             <v-list two-line>
               <div v-for="topic in topicsList" :key="topic.name">
-                <v-list-tile v-bind:key="topic.name" ripple @click="goTotopic">
+                <v-list-tile v-bind:key="topic.name" ripple @click="goTotopic(topic.id)">
                   <v-list-tile-content>
                     <v-list-tile-title v-html="topic.name"></v-list-tile-title>
                     <v-list-tile-sub-title v-html="topic.description"></v-list-tile-sub-title>
@@ -26,24 +27,37 @@
   </v-content>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+import * as types from '../store/types'
+import TopicService from '../services/TopicService'
+
+let topicService = new TopicService()
 export default {
   data () {
     return {
-      topicsList: [
-        {
-          name: 'topic1',
-          description: 'desc_topic1'
-        }
-      ]
+      topicsList: []
     }
   },
   methods: {
-    goTotopic () {
-      this.$router.push('topics/topic')
+    goTotopic (topicId) {
+      this.$router.push('topics/topic/' + topicId)
     },
     addTopic () {
       this.$router.push('topics/addTopic')
     }
+  },
+  computed: {
+    ...mapGetters({
+      UserName: types.USER_NAME,
+      UserId: types.USER_ID
+    })
+  },
+  created () {
+    topicService.getTopics()
+      .then(response => {
+        this.topicsList = response.data
+      })
+    .catch(error => console.log(error))
   }
 }
 </script>

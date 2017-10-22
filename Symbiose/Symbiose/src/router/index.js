@@ -40,7 +40,18 @@ export default new Router({
           component: () => import('@/components/Tasks'),
           meta: {
             requireAuth: true
-          }
+          },
+          children: [
+            {
+              path: 'task/:id',
+              name: 'Task',
+              component: () => import('@/components/Task'),
+              meta: {
+                requireAuth: true
+              }
+            }
+          ]
+
         },
         {
           path: 'topics',
@@ -48,7 +59,17 @@ export default new Router({
           component: () => import('@/components/Topics'),
           meta: {
             requireAuth: true
-          }
+          },
+          children: [
+            {
+              path: 'topic/:id',
+              name: 'Topic',
+              component: () => import('@/components/Topic'),
+              meta: {
+                requireAuth: true
+              }
+            }
+          ]
         }
       ]
     },

@@ -4,10 +4,11 @@
       <v-flex xs12 sm10 md8 lg8 offset-sm1 offset-md2 offset-lg2>
         <v-card>
           <v-card-text>
-            <h3 v-if="tasksList.length > 0" class="text-xs-center">Tasks</h3>
+            <h4>My Projects</h4>
+            <h5 v-if="tasksList.length === 0">You have no tasks for now!</h5>
             <v-list two-line>
               <div v-for="task in tasksList" :key="task.name">
-                <v-list-tile v-bind:key="task.name" ripple @click="goToTask">
+                <v-list-tile v-bind:key="task.name" ripple @click="goToTask(task.id)">
                   <v-list-tile-content>
                     <v-list-tile-title v-html="task.name"></v-list-tile-title>
                     <v-list-tile-sub-title v-html="task.description"></v-list-tile-sub-title>
@@ -26,24 +27,38 @@
   </v-content>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+import * as types from '../store/types'
+import TaskService from '../services/TaskService'
+
+let taskService = new TaskService()
+
 export default {
   data () {
     return {
-      tasksList: [
-        {
-          name: 'task1',
-          description: 'desc_task1'
-        }
-      ]
+      tasksList: []
     }
   },
   methods: {
-    goToTask () {
-      this.$router.push('tasks/task')
+    goToTask (taskId) {
+      this.$router.push('tasks/task/' + taskId)
     },
     addTask () {
       this.$router.push('tasks/addtask')
     }
+  },
+  computed: {
+    ...mapGetters({
+      UserName: types.USER_NAME,
+      UserId: types.USER_ID
+    })
+  },
+  created () {
+    taskService.getTasksByUser(this.UserId)
+      .then(response => {
+        this.tasksList = response.data
+      })
+      .catch(error => console.log(error))
   }
 }
 </script>
