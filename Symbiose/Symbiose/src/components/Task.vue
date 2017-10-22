@@ -5,91 +5,101 @@
           <v-btn icon @click="close" dark>
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Settings</v-toolbar-title>
+          <v-toolbar-title>Task_Title</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">Save</v-btn>
-            <v-menu bottom right offset-y>
-              <v-btn slot="activator" dark icon>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-              <v-list>
-                <v-list-tile v-for="item in items" :key="item.title">
-                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
+            <v-select
+              v-bind:items="statusList"
+              v-model="task.status"
+              dark
+              single-line
+              bottom
+            ></v-select>
           </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
-          <v-btn color="primary" dark @click.stop="dialog2 = !dialog2">Open Dialog 2</v-btn>
-          <v-tooltip right>
-          <v-btn slot="activator">Tool Tip Activator</v-btn>
-            Tool Tip
-          </v-tooltip>
-        <v-list three-line subheader>
-          <v-subheader>User Controls</v-subheader>
-          <v-list-tile avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>Content filtering</v-list-tile-title>
-              <v-list-tile-sub-title>Set the content filtering level to restrict appts that can be downloaded</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>Password</v-list-tile-title>
-              <v-list-tile-sub-title>Require password for purchase or use password to restrict purchase</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list three-line subheader>
-          <v-subheader>General</v-subheader>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-checkbox v-model="notifications"></v-checkbox>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Notifications</v-list-tile-title>
-              <v-list-tile-sub-title>Notify me about updates to apps or games that I downloaded</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-checkbox v-model="sound"></v-checkbox>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Sound</v-list-tile-title>
-              <v-list-tile-sub-title>Auto-update apps at any time. Data charges may apply</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-checkbox v-model="widgets"></v-checkbox>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
+          <v-layout mb-4>
+            <v-flex xs3 sm2 md1 offset-lg1>
+              <v-subheader>Description</v-subheader>
+            </v-flex>
+            <v-flex xs8 elevation-1 pa-2>
+            <div
+              name="topic_description"
+              multi-line
+              readonly
+            >Task_description</div>
+          </v-flex>
+        </v-layout>
+        <v-layout>
+          <v-flex offset-lg1>
+        <v-subheader>Messages</v-subheader>
+        </v-flex>
+        </v-layout>
+        <div v-if="task.messagesList.length > 0" v-for="message in task.messagesList" :key="message.author">
+          <v-layout row mb-2>
+            <v-flex xs3 sm2 md1 elevation-1 pa-2 offset-lg1>
+              <v-layout row>
+              <span>{{ message.author }}</span>
+              </v-layout>
+              <v-layout row>
+              <span>{{ message.dateModified }}</span>
+              </v-layout>
+            </v-flex>
+            <v-flex xs8 elevation-1 pa-2>
+              <div
+                  multi-line
+                  readonly
+                >{{ message.message }}</div>
+              </v-flex>
+            </v-layout>
+          </div>
+        <v-layout mt-2>
+          <v-flex offset-xs3 xs8 offset-sm2 offset-md1 offset-lg2>
+          <v-text-field label="Enter your message here" multi-line v-model="addedMessage"></v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-layout>
+          <v-flex offset-xs8>
+            <v-btn align-center @click="addMessage">Add Message</v-btn>
+          </v-flex>
+        </v-layout>
         </v-card-text>
-
           <div style="flex: 1 1 auto;"></div>
       </v-card>
-
     </v-dialog>
 </template>
 <script>
 export default {
   data () {
     return {
-      dialog: true
+      dialog: true,
+      addedMessage: '',
+      statusList: [
+        {
+          text: 'Done'
+        },
+        {
+          text: 'In work'
+        }
+      ],
+      task: {
+        status: 'Done',
+        messagesList: [
+          {
+            author: 'gigi',
+            message: 'salutasdf asdf asdf asdfasdf asdfasdf sd asdf asdf asdf asdf asdf asdf asdf asdf sad fsad fsad fsad fas dasdf adsf asdf asdf asdf asdf asdf asdf asd',
+            dateModified: '1995-07-11'
+          }
+        ]
+      }
     }
   },
   methods: {
     close () {
       this.$router.replace('/project/tasks')
+    },
+    addMessage () {
+
     }
   }
 }
